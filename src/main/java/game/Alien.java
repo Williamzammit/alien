@@ -23,8 +23,6 @@ public class Alien {
         this.width = width;
         this.height = height;
         this.health = health;
-        position = new Point2D(0, 0);
-        velocity = new Point2D(0, 0);
 
         InputStream stream = new FileInputStream("Alien.png");
         image = new Image(stream);
@@ -32,7 +30,7 @@ public class Alien {
     }
 
     public void update(){
-        position = new Point2D(position.getX() + velocity.getX()*width, 0);
+        position = new Point2D(position.getX() + velocity.getX(), 0);
     }
 
     public void draw(GraphicsContext gc){

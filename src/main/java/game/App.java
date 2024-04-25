@@ -55,6 +55,7 @@ public class App extends Application {
 
         alienCounter = 0;
         distanceTimer = 0;
+        int maxAliens = 3;
         new AnimationTimer(){
             public void handle(long now){
                 gc.setFill(Color.GREEN);
@@ -67,7 +68,7 @@ public class App extends Application {
                     }
                 }
                 distanceTimer++;
-                if(distanceTimer>50){
+                if(distanceTimer>30 && alienCounter < maxAliens){
                     alienCounter++;
                     distanceTimer = 0;
                 }
