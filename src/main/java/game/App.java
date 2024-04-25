@@ -38,10 +38,10 @@ public class App extends Application {
         root = new Group();
         scene = new Scene(root);
         stage.setScene(scene);
-        int numberOfAliens = 12;
+        int numberOfAliens = 120;
         Alien[] aliens = new Alien[numberOfAliens];
         for(int i = 0; i < aliens.length; i++){
-            aliens[i] = new Alien(new Point2D(0, 0), new Point2D(0.2, 0), 16, 16, 1);
+            aliens[i] = new Alien(new Point2D(0, 0), new Point2D(1.2, 0), 16, 16, 1);
         }
         
         
@@ -68,7 +68,7 @@ public class App extends Application {
                     
                 }
                 distanceTimer++;
-                if(distanceTimer>120 && alienCounter < numberOfAliens){
+                if(distanceTimer>30 && alienCounter < numberOfAliens){
                     alienCounter++;
                     distanceTimer = 0;
                 }
