@@ -38,10 +38,10 @@ public class App extends Application {
         root = new Group();
         scene = new Scene(root);
         stage.setScene(scene);
-        int numberOfAliens = 5;
+        int numberOfAliens = 12;
         Alien[] aliens = new Alien[numberOfAliens];
         for(int i = 0; i < aliens.length; i++){
-            aliens[i] = new Alien(new Point2D(0, 0), new Point2D(0.1, 0), 16, 16, 1);
+            aliens[i] = new Alien(new Point2D(0, 0), new Point2D(0.2, 0), 16, 16, 1);
         }
         
         
@@ -55,20 +55,20 @@ public class App extends Application {
 
         alienCounter = 0;
         distanceTimer = 0;
-        int maxAliens = 3;
+        
         new AnimationTimer(){
             public void handle(long now){
                 gc.setFill(Color.GREEN);
                 gc.fillRect(0, 0, 400, 400);
 
-                for(int i = 0; i <= alienCounter; i++){
-                    for(int j = 0; j<i; j++){
-                        aliens[j].update();
-                        aliens[j].draw(gc);
-                    }
+                for(int i = 0; i < alienCounter; i++){
+                    
+                        aliens[i].update();
+                        aliens[i].draw(gc);
+                    
                 }
                 distanceTimer++;
-                if(distanceTimer>30 && alienCounter < maxAliens){
+                if(distanceTimer>120 && alienCounter < numberOfAliens){
                     alienCounter++;
                     distanceTimer = 0;
                 }
