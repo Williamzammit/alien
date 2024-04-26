@@ -38,10 +38,10 @@ public class App extends Application {
         root = new Group();
         scene = new Scene(root);
         stage.setScene(scene);
-        int numberOfAliens = 120;
+        int numberOfAliens = 100;
         Alien[] aliens = new Alien[numberOfAliens];
         for(int i = 0; i < aliens.length; i++){
-            aliens[i] = new Alien(new Point2D(0, 0), new Point2D(1.2, 0), 16, 16, 1);
+            aliens[i] = new Alien(new Point2D(0, 0), new Point2D(2, 2), 16, 16, 1);
         }
         
         
@@ -58,7 +58,7 @@ public class App extends Application {
         
         new AnimationTimer(){
             public void handle(long now){
-                gc.setFill(Color.GREEN);
+                gc.setFill(Color.PINK);
                 gc.fillRect(0, 0, 400, 400);
 
                 for(int i = 0; i < alienCounter; i++){
@@ -68,7 +68,7 @@ public class App extends Application {
                     
                 }
                 distanceTimer++;
-                if(distanceTimer>30 && alienCounter < numberOfAliens){
+                if(distanceTimer>40 && alienCounter < numberOfAliens){
                     alienCounter++;
                     distanceTimer = 0;
                 }

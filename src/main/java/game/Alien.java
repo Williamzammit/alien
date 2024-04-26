@@ -13,9 +13,12 @@ public class Alien {
     int width;
     int height;
     int health;
+    
 
     Image image;
     int state;
+    boolean direction;
+    int downwardDistance;
 
     public Alien(Point2D position, Point2D velocity, int width, int height, int health) throws Exception{
         this.position = position;
@@ -27,10 +30,21 @@ public class Alien {
         InputStream stream = new FileInputStream("Alien.png");
         image = new Image(stream);
         state = 0;
+        direction = true;//True = right
+        downwardDistance = 1;
     }
 
     public void update(){
-        position = new Point2D(position.getX() + velocity.getX(), 0);
+        if(direction && position.getX() > (400-width)){
+            updateDown();
+        } else if(!direction && position.getX() < 0){
+            updateDown();
+        } else if(direction){
+            updateRight();
+        } else if(!direction){
+            updateLeft();
+        }
+        
     }
 
     public void draw(GraphicsContext gc){
@@ -43,6 +57,23 @@ public class Alien {
         }
         if (state > 20){
             state = 0;
+        }
+    }
+
+    public void updateRight(){
+        position = new Point2D(position.getX() + velocity.getX(), position.getY());
+    }
+
+    public void updateLeft(){
+        position = new Point2D(position.getX() - velocity.getX(), position.getY());
+    }
+
+    public void updateDown(){
+        if(position.getY() > 16*downwardDistance){
+            direction = !direction;
+            downwardDistance++;
+        } else {
+        position = new Point2D(position.getX(), position.getY() + velocity.getY());
         }
     }
     
