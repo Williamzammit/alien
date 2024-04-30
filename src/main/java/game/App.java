@@ -36,6 +36,9 @@ public class App extends Application {
     private static int distanceTimer;
     private static int alienCounter;
 
+    static Alien[] aliens;
+    int numberOfAliens;
+
     
 
     static HashSet<String> currentlyActiveKeys;
@@ -47,9 +50,9 @@ public class App extends Application {
         root = new Group();
         scene = new Scene(root);
         stage.setScene(scene);
-        int numberOfAliens = 100;
+        numberOfAliens = 10;
         player = new Player(new Point2D(200, 350), new Point2D(5, 5), 16, 16);
-        Alien[] aliens = new Alien[numberOfAliens];
+        aliens = new Alien[numberOfAliens];
         for(int i = 0; i < aliens.length; i++){
             aliens[i] = new Alien(new Point2D(0, 0), new Point2D(2, 2), 16, 16, 1);
         }
@@ -72,8 +75,14 @@ public class App extends Application {
             public void handle(long now){
                 gc.setFill(Color.PINK);
                 gc.fillRect(0, 0, 400, 400);
+                try{
                 tickAndRender();
+                } catch(Exception e){
+
+                }
                 player.draw(gc);
+                player.periodic(gc);
+                checkCollisions();
 
                 for(int i = 0; i < alienCounter; i++){
                     
@@ -113,7 +122,7 @@ public class App extends Application {
       });//end setOnKeyReleased
     }//end prepareActionHandlers()
 
-    private static void tickAndRender(){
+    private static void tickAndRender() throws Exception{
 
         if(currentlyActiveKeys.contains("LEFT")){
             player.updateLeft();
@@ -122,7 +131,33 @@ public class App extends Application {
             player.updateRight();
             //player.draw(gc);
         }
+        if(currentlyActiveKeys.contains("SPACE")){
+            player.shootBullet();
+        }
 
+    }
+
+    public void removeAliens(int x){
+        aliens[x].defeatAlien(gc);
+    }
+
+    public void checkCollisions(){
+        for(int i = 0; i < player.getBulletAmount(); i++){
+            if(player.bullets.get(i).active){
+            for(int j = 0; j < numberOfAliens; j++){
+                if(
+                    (player.getBulletX(i) > aliens[j].getAlienX() && player.getBulletX(i) < (aliens[j].getAlienX()+16)) 
+                    &&
+                    ((player.getBulletY(i) > aliens[j].getAlienY() || player.getBulletY(i)+16 > aliens[j].getAlienY())
+                     && player.getBulletY(i) < (aliens[j].getAlienY()+16))
+                ){
+                    System.out.println("DBUISALKBFKHOALFBHAIOBFSAHKFAS");
+                    aliens[j].defeatAlien(gc);
+                    player.bullets.get(i).deleteBullet(gc);
+                }
+            }
+        }
+        }
     }
 
     /*static void setRoot(String fxml) throws IOException {

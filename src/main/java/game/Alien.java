@@ -35,6 +35,7 @@ public class Alien {
     }
 
     public void update(){
+        if(health > 0){
         if(direction && position.getX() > (400-width)){
             updateDown();
         } else if(!direction && position.getX() < 0){
@@ -44,10 +45,12 @@ public class Alien {
         } else if(!direction){
             updateLeft();
         }
+        }   
         
     }
 
     public void draw(GraphicsContext gc){
+        if(health > 0){
         if(state < 10){
             gc.drawImage(image, 16, 0, width, height, position.getX(), position.getY(), width, height);
             state++;
@@ -57,6 +60,7 @@ public class Alien {
         }
         if (state > 20){
             state = 0;
+        }
         }
     }
 
@@ -75,6 +79,20 @@ public class Alien {
         } else {
         position = new Point2D(position.getX(), position.getY() + velocity.getY());
         }
+    }
+
+    public void defeatAlien(GraphicsContext gc){
+        health = 0;
+        position = new Point2D(0, 400);
+        gc.drawImage(null, position.getX(), position.getY(), 16, 16);
+    }
+
+    public double getAlienX(){
+        return position.getX();
+    }
+
+    public double getAlienY(){
+        return position.getY();
     }
     
 }
